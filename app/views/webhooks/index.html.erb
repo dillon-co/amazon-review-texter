@@ -1,3 +1,7 @@
 <h1>This is Amazonian</h1>
 
 <h3>For generating reviews.</h3>
+
+<% @webhooks.each do |webhook| %>
+  <h4><%= webhook.fulldata %></h4><br/><hr/><br/>
+<% end %>  
