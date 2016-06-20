@@ -1,6 +1,8 @@
 class CreateUsers < ActiveRecord::Migration
   def change
     create_table :users do |t|
+      t.belongs_to :products, index: true
+
       t.string  :name
       t.string  :phone_number
       t.integer :reviews_given

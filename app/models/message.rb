@@ -14,34 +14,33 @@
 #
 
 class Message < ActiveRecord::Base
-  belongs_to :product
+  belongs_to :user
   after_save :send_message
 
    def send_message
-    @twilio_number = '+13853753097'
+    @user_message = user_message
     api = Twilio::REST::Client.new ENV['AMAZONIAN_TWILIO_ACCOUNT_SID'], ENV['AMAZONIAN_TWILIO_AUTH_TOKEN']
-    messages = user_message.scan(/.{1,800}/m)
-    messages.each do |msg|
-      api.messages.create(
-        :from => @twilio_number,
-        :to => user_reformatted_number,
-        :body => msg
-      ).status
-    end 
+    api.messages.create(
+      :from => '+13853753097',
+      :to => user_reformatted_number,
+      :body => @user_message
+    )
   end
 
   def user_reformatted_number
+    puts user_number
     user_number.gsub(/[^\d]/, '')
   end  
 
   def user_message
     bit_link = bitly_link
-    # "Hey #{user_name}, this is Dillon from the app. I'm running some tests, Text me if you get this message."
-    "Hey #{user_name}, thanks in advance for leaving a quick review. Just follow this link \n#{bit_link} \n\n\nLet me know if you have any questions!"
-  end 
+    name = self.user_name
+    "\nHey #{name}, thanks in advance for leaving a quick review. Just follow this link\n#{bit_link}\n\n\nLet me know if you have any questions!"
+  end  
 
   def bitly_link
     bitly_object = Bitly.client.shorten(review_redirect_url)
+    puts bitly_object.short_url
     bitly_object.short_url
   end  
 end

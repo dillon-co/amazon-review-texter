@@ -17,7 +17,7 @@ ActiveRecord::Schema.define(version: 20160620002152) do
   enable_extension "plpgsql"
 
   create_table "messages", force: :cascade do |t|
-    t.integer  "product_id"
+    t.integer  "user_id"
     t.text     "sms_message"
     t.string   "user_number"
     t.string   "user_name"
@@ -27,10 +27,9 @@ ActiveRecord::Schema.define(version: 20160620002152) do
     t.datetime "updated_at",          null: false
   end
 
-  add_index "messages", ["product_id"], name: "index_messages_on_product_id", using: :btree
+  add_index "messages", ["user_id"], name: "index_messages_on_user_id", using: :btree
 
   create_table "products", force: :cascade do |t|
-    t.integer  "user_id"
     t.string   "name"
     t.string   "amazon_review_url"
     t.integer  "amazon_id"
@@ -39,9 +38,8 @@ ActiveRecord::Schema.define(version: 20160620002152) do
     t.datetime "updated_at",                    null: false
   end
 
-  add_index "products", ["user_id"], name: "index_products_on_user_id", using: :btree
-
   create_table "users", force: :cascade do |t|
+    t.integer  "products_id"
     t.string   "name"
     t.string   "phone_number"
     t.integer  "reviews_given"
@@ -49,6 +47,8 @@ ActiveRecord::Schema.define(version: 20160620002152) do
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false
   end
+
+  add_index "users", ["products_id"], name: "index_users_on_products_id", using: :btree
 
   create_table "webhooks", force: :cascade do |t|
     t.text     "fulldata"

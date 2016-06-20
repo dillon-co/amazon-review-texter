@@ -12,6 +12,7 @@
 #
 
 class User < ActiveRecord::Base
-  has_many :products
+  belongs_to :product
+  has_many :messages
 
 end
