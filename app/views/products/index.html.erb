@@ -1,0 +1,17 @@
+<h1>This is Amazonian</h1>
+
+<h3>For generating reviews.</h3>
+
+
+<% @products.each do |product| %>
+<div class="container col-md-4">
+  <div class="jumbotron">
+    <div class="product-name pagination-centered">
+      <h2><%= product.name %></h2> 
+    </div>
+    <div class="review-count">
+      <p>Review Count: <%= product.review_count %></p>
+    </div>  
+  </div>  
+</div>  
+<% end %>  

@@ -2,11 +2,19 @@ Rails.application.routes.draw do
 
 
 
+  resources :users
+  resources :messages
+
   # resources :webhooks
   # get 'webhooks/:action' as: 'webhooks#index'
 
-  root to: 'webhooks#index'
+  resources :products
+  get 'review_redirect/:id' => 'products#review_redirect', as: :review_redirect
 
+  root to: 'products#index'
+
+
+  # post 'webhooks/:action' => 'webhooks#:action'
   post 'webhooks/:action', as: :webhooks, controller: 'webhooks'
   # The priority is based upon order of creation: first created -> highest priority.
   #

@@ -1,0 +1,11 @@
+<div class="container jumbotron">
+<%= form_for @product do |f| %>
+  <h3>Product Name</h3>
+  <%= f.text_field :name %><br/>
+  <h3>Product ID</h3>
+  <%= f.text_field :amazon_id %><br/>
+  <h3>Product Review URL:</h3>
+  <%= f.text_field :amazon_review_url %><br/><br/>
+  <%= f.submit "Monitor Product Review Generation.", class: "btn btn-primary" %>
+<% end %>
+</div>
