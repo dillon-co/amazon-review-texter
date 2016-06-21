@@ -34,8 +34,7 @@ class Message < ActiveRecord::Base
 
   def user_message
     bit_link = bitly_link
-    name = self.user_name
-    "\nHey #{name}, thanks in advance for leaving a quick review. Just follow this link\n#{bit_link}\n\n\nLet me know if you have any questions!"
+    "\nHey, thanks in advance for leaving a quick review. Just follow this link\n#{bit_link}\n\n\nLet me know if you have any questions!"
   end  
 
   def bitly_link

@@ -14,7 +14,10 @@
       </div>
       <div class="review-count">
         <p>Review Count: <%= product.review_count %></p>
-      </div>  
+      </div> 
+      <div class='btn btn-warn'>
+        <%= link_to 'Delete', product_path(product), method: :delete, data: {confirm: "You Sure?"}, class: 'btn btn-warn' %>
+      </div> 
     </div>  
   </div>  
   <% end %>  
