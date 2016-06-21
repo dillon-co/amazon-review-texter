@@ -12,10 +12,10 @@
 #  created_at          :datetime         not null
 #  updated_at          :datetime         not null
 #
-
+require 'texting_worker'
 class Message < ActiveRecord::Base
   belongs_to :user
-  after_save :send_message
+  after_save :call_text_message_worker
 
    def send_message
     @user_message = user_message
@@ -41,6 +41,10 @@ class Message < ActiveRecord::Base
     bitly_object = Bitly.client.shorten(review_redirect_url)
     puts bitly_object.short_url
     bitly_object.short_url
+  end
+
+  def call_text_message_worker
+    TextWorker.perform_async(id)
   end  
 end
 

@@ -29,6 +29,13 @@ gem 'bootstrap', '~> 4.0.0.alpha3'
 
 gem 'bitly'
 
+gem 'rails_12factor'
+
+gem 'sidekiq'
+
+gem 'sinatra', :require => nil
+gem 'redis-rails', '~> 4.0.0'
+gem 'redis-namespace'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
