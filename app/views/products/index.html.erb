@@ -1,7 +1,7 @@
-
+<div class="container">
   <h1>Your Products</h1>
-
-<%= link_to "Add Product", new_product_path,  class:"btn btn-success"%><br></br>
+  <%= link_to "Add Product", new_product_path,  class:"btn btn-success"%><br></br>
+</div>
 
 
 
@@ -16,7 +16,7 @@
         <p>Review Count: <%= product.review_count %></p>
       </div> 
       <div class='btn btn-warn'>
-        <%= link_to 'Delete', product_path(product), method: :delete, data: {confirm: "You Sure?"}, class: 'btn btn-warn' %>
+        <%= link_to 'Delete', product_path(product), method: :delete, data: {confirm: "You Sure?"}, class: 'btn btn-warning' %>
       </div> 
     </div>  
   </div>  
