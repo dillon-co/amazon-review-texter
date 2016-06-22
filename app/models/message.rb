@@ -21,6 +21,7 @@ class Message < ActiveRecord::Base
     @user_message = user_message
     @user_reformatted_number = user_reformatted_number
     api = Twilio::REST::Client.new ENV['AMAZONIAN_TWILIO_ACCOUNT_SID'], ENV['AMAZONIAN_TWILIO_AUTH_TOKEN']
+    # api = Twilio::REST::Client.new 'SM20a3c42c7f224e7fb3fa5ae69c5a4098', ENV['AMAZONIAN_TWILIO_AUTH_TOKEN']
     api.messages.create(
       :from => '+13853753097',
       :to => @user_reformatted_number,
@@ -42,10 +43,11 @@ class Message < ActiveRecord::Base
     bitly_object = Bitly.client.shorten(review_redirect_url)
     puts bitly_object.short_url
     bitly_object.short_url
+
   end
 
   def call_text_message_worker
-    
+
     TextWorker.perform_async(self.id)
   end  
 end
