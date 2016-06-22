@@ -19,10 +19,11 @@ class Message < ActiveRecord::Base
 
    def send_message
     @user_message = user_message
+    @user_reformatted_number = user_reformatted_number
     api = Twilio::REST::Client.new ENV['AMAZONIAN_TWILIO_ACCOUNT_SID'], ENV['AMAZONIAN_TWILIO_AUTH_TOKEN']
     api.messages.create(
       :from => '+13853753097',
-      :to => user_reformatted_number,
+      :to => @user_reformatted_number,
       :body => @user_message
     )
   end
@@ -44,7 +45,8 @@ class Message < ActiveRecord::Base
   end
 
   def call_text_message_worker
-    TextWorker.perform_async(id)
+    
+    TextWorker.perform_async(self.id)
   end  
 end
 
