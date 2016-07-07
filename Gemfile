@@ -37,6 +37,12 @@ gem 'sinatra', :require => nil
 gem 'redis-rails', '~> 4.0.0'
 gem 'redis-namespace'
 
+gem 'peddler', '~> 1.3'
+
+gem "sidekiq-cron", "~> 0.4.0"
+
+gem 'unirest'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 

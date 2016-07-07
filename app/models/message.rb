@@ -34,7 +34,7 @@ class Message < ActiveRecord::Base
     user_number.gsub(/[^\d]/, '')
   end  
 
-  def user_message
+  def user_message  
     "\nHey, thanks in advance for leaving a quick review. Just follow this link\n#{review_redirect_url}\n\n\nLet me know if you have any questions!"
   end  
 

@@ -1,0 +1,1 @@
+Sidekiq::Cron::Job.create(name:"grab orders from 2 weeks ago", cron: "0 2 * * *", klass: 'DailyNameGenerator')
