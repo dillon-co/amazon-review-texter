@@ -3,10 +3,10 @@ class DailyNameGenerator
   include Sidekiq::Worker
   def perform
     client = MWS.orders(
-      primary_marketplace_id: "ATVPDKIKX0DER",
-      merchant_id: "A31Z8NMYO8KM9M",
-      aws_access_key_id: "AKIAJDSMZRGGGJE5PASQ",
-      aws_secret_access_key: "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",
+      primary_marketplace_id: ENV['AMAZONIAN_MARKETPLACE_ID'],
+      merchant_id: ENV['AMAZONIAN_MERCHANT_ID'],
+      aws_access_key_id: ENV['AMAZONIAN_ACCESS_KEY_ID'],
+      aws_secret_access_key: ENV['AMAZONIAN_SECERET'],
       # auth_token: "Seller's MWS Authorisation Token"  
     )
 
