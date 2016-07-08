@@ -15,4 +15,11 @@
 class Product < ActiveRecord::Base
   has_many :users
 
+  before_save: update_review_url
+
+  
+  def update_review_url
+    amazon_review_url ||= "https://www.amazon.com/review/create-review/ref=cm_cr_dp_wrt_summary?ie=UTF8&asin=#{amazon_id}#"  
+  end  
+
 end

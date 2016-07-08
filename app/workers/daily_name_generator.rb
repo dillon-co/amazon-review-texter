@@ -20,9 +20,10 @@ class DailyNameGenerator
         client.list_orders({created_after: "#{start_time.iso8601}", created_before: "#{end_time.iso8601}"}).xml['ListOrdersResponse']['ListOrdersResult']['Orders']['Order'].each do |o| 
           if o['OrderStatus'] != "Canceled" 
             puts o['OrderStatus']
-            puts "#{start_time.hour}\n#{counter+=1}: #{o['BuyerName']} - #{o['ShippingAddress']['Phone']}---" 
+            puts "#{start_time.hour}\n#{counter+=1}: #{o['BuyerName']} - #{o['ShippingAddress']['Phone']}" 
             order_details = client.list_order_items(o['AmazonOrderId']).xml["ListOrderItemsResponse"]["ListOrderItemsResult"]["OrderItems"]["OrderItem"]
-            # byebug
+            # byebug\
+            puts order_details["Title"].split(' - ').first
             first_name, last_name = o['BuyerName'].split(' ')
             order_details["Title"].split(' - ').first
             puts "\n\n#{'='*20}\n\n"
@@ -31,6 +32,7 @@ class DailyNameGenerator
                                     parameters:{ first_name:    first_name,
                                                  last_name:     last_name, 
                                                  primary_phone: o['ShippingAddress']['Phone'], 
+                                                 zip_code:      o['ShippingAddress']['PostalCode'].split('-').first,   
                                                  product_title: order_details["Title"].split(' - ').first, 
                                                  product_id:    order_details['ASIN'] }
             
