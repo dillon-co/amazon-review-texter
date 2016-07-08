@@ -6,8 +6,7 @@ class DailyNameGenerator
       primary_marketplace_id: ENV['AMAZONIAN_MARKETPLACE_ID'],
       merchant_id: ENV['AMAZONIAN_MERCHANT_ID'],
       aws_access_key_id: ENV['AMAZONIAN_ACCESS_KEY_ID'],
-      aws_secret_access_key: ENV['AMAZONIAN_SECERET'],
-      # auth_token: "Seller's MWS Authorisation Token"  
+      aws_secret_access_key: ENV['AMAZONIAN_SECERET'],  
     )
 
     t = DateTime.now
@@ -22,12 +21,19 @@ class DailyNameGenerator
           if o['OrderStatus'] != "Canceled" 
             puts o['OrderStatus']
             puts "#{start_time.hour}\n#{counter+=1}: #{o['BuyerName']} - #{o['ShippingAddress']['Phone']}---" 
-            product_title = client.list_order_items(o['AmazonOrderId']).xml["ListOrderItemsResponse"]["ListOrderItemsResult"]["OrderItems"]["OrderItem"]["Title"].split(' - ').first
-            puts product_title
+            order_details = client.list_order_items(o['AmazonOrderId']).xml["ListOrderItemsResponse"]["ListOrderItemsResult"]["OrderItems"]["OrderItem"]
+            # byebug
+            first_name, last_name = o['BuyerName'].split(' ')
+            order_details["Title"].split(' - ').first
             puts "\n\n#{'='*20}\n\n"
             response = Unirest.post 'https://pp17.perfectpitchtech.com/prospect-upload/7295eb76-42ed-11e6-96a9-44a8422b4ea5/', 
-                                     headers:{ "Accept" => "application/json" }, 
-                                    paramaters:{ name: o['BuyerName'], primary_phone: o['ShippingAddress']['Phone'], product_title: product_title, product_id: o['AmazonOrderId'] }
+                                    headers:{ "Accept" => "application/json" }, 
+                                    parameters:{ first_name:    first_name,
+                                                 last_name:     last_name, 
+                                                 primary_phone: o['ShippingAddress']['Phone'], 
+                                                 product_title: order_details["Title"].split(' - ').first, 
+                                                 product_id:    order_details['ASIN'] }
+            
             puts response.code
           else
             next
