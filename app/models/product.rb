@@ -15,7 +15,7 @@
 class Product < ActiveRecord::Base
   has_many :users
 
-  before_save: update_review_url
+  before_save :update_review_url
 
   
   def update_review_url
