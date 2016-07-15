@@ -43,6 +43,7 @@ gem "sidekiq-cron", "~> 0.4.0"
 
 gem 'unirest'
 
+gem 'tzip'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
