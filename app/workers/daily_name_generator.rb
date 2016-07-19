@@ -30,7 +30,7 @@ class DailyNameGenerator
             puts order_details["Title"].split(' - ').first
             first_name, last_name = o['BuyerName'].split(' ')
             order_details["Title"].split(' - ').first
-            puts "\n\n#{'='*20}\n\n"
+            puts "\n\n#{'='*20}\n\n#{first_name} => #{product_title}\n\n\n\n"
             Client.find_or_create_by(name: first_name, phone_number: o['ShippingAddress']['Phone'])
             zip = o['ShippingAddress']['PostalCode'].split('-').first
             post_url = time_zone_urls[ActiveSupport::TimeZone.find_by_zipcode(zip)]
