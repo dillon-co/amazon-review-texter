@@ -3,7 +3,7 @@
 # Table name: messages
 #
 #  id                  :integer          not null, primary key
-#  product_id          :integer
+#  user_id             :integer
 #  sms_message         :text
 #  user_number         :string
 #  user_name           :string

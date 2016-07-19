@@ -3,7 +3,7 @@
 # Table name: messages
 #
 #  id                  :integer          not null, primary key
-#  product_id          :integer
+#  user_id             :integer
 #  sms_message         :text
 #  user_number         :string
 #  user_name           :string
@@ -12,9 +12,13 @@
 #  created_at          :datetime         not null
 #  updated_at          :datetime         not null
 #
+
 require 'texting_worker'
 class Message < ActiveRecord::Base
   belongs_to :user
+  belongs_to :customer_response
+  before_save :user_message
+  after_save :create_client
   after_save :call_text_message_worker
 
    def send_message
@@ -25,7 +29,7 @@ class Message < ActiveRecord::Base
     api.messages.create(
       :from => '+13852009830',
       :to => @user_reformatted_number,
-      :body => @user_message
+      :body => sms_message
     )
   end
 
@@ -34,8 +38,9 @@ class Message < ActiveRecord::Base
     user_number.gsub(/[^\d]/, '')
   end  
 
+
   def user_message  
-    "\nHey, thanks in advance for leaving a quick review. Just follow this link\n#{review_redirect_url}\n\n\nLet me know if you have any questions!"
+    sms_message ||= "Hey, thanks in advance for leaving a quick review. Just follow this link\n#{review_redirect_url}\n\n\nLet me know if you have any questions!"
   end  
 
 

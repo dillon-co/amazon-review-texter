@@ -3,6 +3,7 @@
 # Table name: users
 #
 #  id                :integer          not null, primary key
+#  products_id       :integer
 #  name              :string
 #  phone_number      :string
 #  reviews_given     :integer

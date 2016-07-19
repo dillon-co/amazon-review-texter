@@ -2,6 +2,8 @@ Rails.application.routes.draw do
 
 
 
+  resources :clients
+  # resources :customer_responses
   resources :users
   resources :messages
 
@@ -16,6 +18,8 @@ Rails.application.routes.draw do
 
   # post 'webhooks/:action' => 'webhooks#:action'
   post 'webhooks/:action', as: :webhooks, controller: 'webhooks'
+
+  post 'customer_responses/:action', as: :customer_responses, controller: 'customer_responses'
   # The priority is based upon order of creation: first created -> highest priority.
   #
   #

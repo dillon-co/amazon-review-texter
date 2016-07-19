@@ -31,7 +31,7 @@ class DailyNameGenerator
             first_name, last_name = o['BuyerName'].split(' ')
             order_details["Title"].split(' - ').first
             puts "\n\n#{'='*20}\n\n"
-
+            Client.find_or_create_by(name: first_name, phone_number: o['ShippingAddress']['Phone'])
             zip = o['ShippingAddress']['PostalCode'].split('-').first
             post_url = time_zone_urls[ActiveSupport::TimeZone.find_by_zipcode(zip)]
               response = Unirest.post post_url, 
