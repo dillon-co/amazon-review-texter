@@ -22,9 +22,9 @@ class CustomerResponse < ActiveRecord::Base
     if client.phone_number == '8056038329'
       user_name, full_message = message.split(' - ', 2)
       c = Client.find_by(name: user_name)
-      messages.new(user_number: c.phone_number, sms_messaage: full_message)
+      messages.create(user_number: c.phone_number, sms_messaage: full_message)
     else  
-      messages.new(user_number: '8056038329', sms_message: clients_message)
+      messages.create(user_number: '8056038329', sms_message: clients_message)
     end  
   end
   
