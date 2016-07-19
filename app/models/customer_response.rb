@@ -19,7 +19,7 @@ class CustomerResponse < ActiveRecord::Base
 
 
   def forward_message
-    if client.phone_number == '8056038329'
+    if client.phone_number == '+18056038329'
       users_id, full_message = message.split(' - ', 2)
       c = Client.find(users_id.to_i)
       messages.create(user_number: c.phone_number, sms_messaage: full_message)
