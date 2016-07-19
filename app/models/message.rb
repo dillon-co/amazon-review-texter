@@ -19,7 +19,6 @@ class Message < ActiveRecord::Base
   belongs_to :user
   belongs_to :customer_response
   before_save :user_message
-  after_save :create_client
   after_save :call_text_message_worker
 
    def send_message
@@ -47,7 +46,6 @@ class Message < ActiveRecord::Base
 
 
   def call_text_message_worker
-
     TextWorker.perform_async(self.id)
   end  
 end
