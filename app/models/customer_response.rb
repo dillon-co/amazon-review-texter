@@ -29,7 +29,7 @@ class CustomerResponse < ActiveRecord::Base
   end
   
   def clients_message
-    "From #{client.name}:\n\n #{message}"
+    "From #{client.id}:\n\n #{message}"
   end
     
 
