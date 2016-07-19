@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160719164120) do
+ActiveRecord::Schema.define(version: 20160719174251) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -47,10 +47,12 @@ ActiveRecord::Schema.define(version: 20160719164120) do
     t.string   "user_name"
     t.string   "product_name"
     t.string   "review_redirect_url"
-    t.datetime "created_at",          null: false
-    t.datetime "updated_at",          null: false
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+    t.integer  "customer_response_id"
   end
 
+  add_index "messages", ["customer_response_id"], name: "index_messages_on_customer_response_id", using: :btree
   add_index "messages", ["user_id"], name: "index_messages_on_user_id", using: :btree
 
   create_table "products", force: :cascade do |t|
@@ -81,4 +83,5 @@ ActiveRecord::Schema.define(version: 20160719164120) do
   end
 
   add_foreign_key "customer_responses", "messages"
+  add_foreign_key "messages", "customer_responses"
 end

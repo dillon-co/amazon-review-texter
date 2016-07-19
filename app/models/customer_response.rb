@@ -33,5 +33,4 @@ class CustomerResponse < ActiveRecord::Base
   end
     
 
-
 end
