@@ -29,7 +29,7 @@ class DailyNameGenerator
             # byebug\
             puts order_details["Title"].split(' - ').first
             first_name, last_name = o['BuyerName'].split(' ')
-            order_details["Title"].split(' - ').first
+            p_title = order_details["Title"].split(' - ').first
             puts "\n\n#{'='*20}\n\n#{first_name} => #{product_title}\n\n\n\n"
             Client.find_or_create_by(name: first_name, phone_number: o['ShippingAddress']['Phone'])
             zip = o['ShippingAddress']['PostalCode'].split('-').first
@@ -40,7 +40,7 @@ class DailyNameGenerator
                                                    last_name:     last_name, 
                                                    primary_phone: o['ShippingAddress']['Phone'], 
                                                    zip_code:      zip,   
-                                                   product_title: order_details["Title"].split(' - ').first, 
+                                                   product_title: p_title, 
                                                    product_id:    order_details['ASIN'] }
           
             puts response.code
