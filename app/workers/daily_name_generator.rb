@@ -21,6 +21,7 @@ class DailyNameGenerator
                            "Mountain Time (US & Canada)" => 'https://pp17.perfectpitchtech.com/prospect-upload/2e46d24a-4ab9-11e6-ac7d-44a8422b4ea5/',
                            "Eastern Time (US & Canada)" => 'https://pp17.perfectpitchtech.com/prospect-upload/24c39dd4-4ab9-11e6-b20d-44a8422b4ea5/',
                            "Central Time (US & Canada)" => 'https://pp17.perfectpitchtech.com/prospect-upload/29cb7d1a-4ab9-11e6-98d4-44a8422b4ea5/'}
+       # byebug
         client.list_orders({created_after: "#{start_time.iso8601}", created_before: "#{end_time.iso8601}"}).xml['ListOrdersResponse']['ListOrdersResult']['Orders']['Order'].each do |o| 
           if o['OrderStatus'] != "Canceled" 
             puts o['OrderStatus']
@@ -33,7 +34,8 @@ class DailyNameGenerator
             puts "\n\n#{'='*20}\n\n#{first_name} => #{p_title}\n\n\n\n"
             Client.find_or_create_by(name: first_name, phone_number: o['ShippingAddress']['Phone'])
             zip = o['ShippingAddress']['PostalCode'].split('-').first
-            post_url = time_zone_urls[ActiveSupport::TimeZone.find_by_zipcode(zip)]
+            # byebug
+            post_url = time_zone_urls[time_zone(zip)]
               response = Unirest.post post_url, 
                                       headers:{ "Accept" => "application/json" }, 
                                       parameters:{ first_name:    first_name,
@@ -54,5 +56,42 @@ class DailyNameGenerator
         next
       end  
     end
+  end 
+
+  def time_zone(zip)
+    if !!(ActiveSupport::TimeZone.find_by_zipcode(zip))
+      ActiveSupport::TimeZone.find_by_zipcode(zip)
+    else
+      number = zip.match(/[0-9]{3}/).to_s.to_i
+      time_sone_lookup(number)
+    end  
+  end 
+
+  def time_sone_lookup(str)
+    case str
+    when 0..49
+      "Eastern Time (US & Canada)" 
+    when 50..79
+       "Central Time (US & Canada)"
+    when 80..87
+      "Mountain Time (US & Canada)"
+    else 
+      "Pacific Time (US & Canada)"
+    end      
   end  
-end  
+end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
