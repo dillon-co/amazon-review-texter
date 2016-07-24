@@ -1,0 +1,9 @@
+<div class="container">
+  <%= form_for [@product, @client_email], :html => { :multipart => true } do |f| %>
+  <h2>Email Body</h2>
+    <%= f.text_area :body  %> </br>
+    <%= f.file_field :document %></br></br>
+    <%= f.submit "Create Email", class: 'btn btn-primary' %>
+  <% end %>
+</div>
+<!-- class: 'ckeditor' -->

@@ -35,6 +35,25 @@ Rails.application.configure do
   # yet still be able to expire them through the digest params.
   config.assets.digest = true
 
+   config.paperclip_defaults = {
+    storage: :s3,
+    s3_credentials: {
+      bucket: 'amazonian-documents',
+      access_key_id: ENV['AMAZON_ACCESS_KEY_ID'],
+      secret_access_key: ENV['AMAZON_SECRET_ACCESS_KEY'],
+      s3_region: 'us-east-1',
+    }
+  }
+
+
+  config.action_mailer.smtp_settings = {
+    :address              => "smtp.gmail.com",
+    :port                 => 587,
+    :user_name            => 'kdbrands01@gmail.com',
+    :password             => ENV['KD_GMAIL_PASSWORD'],
+    :authentication       => "plain",
+  :enable_starttls_auto => true
+}
   # `config.assets.precompile` and `config.assets.version` have moved to config/initializers/assets.rb
 
   # Specifies the header that your server uses for sending files.

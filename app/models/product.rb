@@ -13,6 +13,7 @@
 
 class Product < ActiveRecord::Base
   belongs_to :users
+  has_one :client_email
 
   before_save :update_review_url
 

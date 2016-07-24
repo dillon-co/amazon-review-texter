@@ -11,10 +11,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160719174251) do
+ActiveRecord::Schema.define(version: 20160723200218) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "client_emails", force: :cascade do |t|
+    t.integer  "product_id"
+    t.string   "name"
+    t.string   "email"
+    t.text     "body"
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+    t.string   "document_file_name"
+    t.string   "document_content_type"
+    t.integer  "document_file_size"
+    t.datetime "document_updated_at"
+  end
+
+  add_index "client_emails", ["product_id"], name: "index_client_emails_on_product_id", using: :btree
 
   create_table "clients", force: :cascade do |t|
     t.string   "name"
@@ -34,11 +49,6 @@ ActiveRecord::Schema.define(version: 20160719174251) do
 
   add_index "customer_responses", ["client_id"], name: "index_customer_responses_on_client_id", using: :btree
   add_index "customer_responses", ["message_id"], name: "index_customer_responses_on_message_id", using: :btree
-
-  create_table "customers", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
 
   create_table "messages", force: :cascade do |t|
     t.integer  "user_id"

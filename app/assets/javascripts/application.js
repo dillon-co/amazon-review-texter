@@ -13,4 +13,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require bootstrap-sprockets
+//= require ckeditor-jquery
 //= require_tree .
+
+$('.ckeditor').ckeditor({})

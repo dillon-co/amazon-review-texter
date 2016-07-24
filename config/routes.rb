@@ -10,7 +10,11 @@ Rails.application.routes.draw do
   # resources :webhooks
   # get 'webhooks/:action' as: 'webhooks#index'
 
-  resources :products
+  resources :products do 
+    resources :client_emails
+  end  
+
+
   get 'review_redirect/:id' => 'products#review_redirect', as: :review_redirect
 
   root to: 'products#index'

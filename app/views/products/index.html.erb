@@ -1,3 +1,4 @@
+
 <div class="container">
   <h1>Your Products</h1>
   <%= link_to "Add Product", new_product_path,  class:"btn btn-success"%><br></br>
@@ -15,9 +16,14 @@
       <div class="review-count">
         <p>Review Count: <%= product.review_count %></p>
       </div> 
-      <div class='btn btn-warn'>
+      <div class='btn btn-warn col-md-4'>
         <%= link_to 'Delete', product_path(product), method: :delete, data: {confirm: "You Sure?"}, class: 'btn btn-warning' %>
       </div> 
+      <div class='col-md-4'>
+        <% if !product.client_email %>
+          <%= link_to 'Create Email', new_product_client_email_path(product), class: 'btn btn-success' %>
+        <% end %>  
+      </div>  
     </div>  
   </div>  
   <% end %>  

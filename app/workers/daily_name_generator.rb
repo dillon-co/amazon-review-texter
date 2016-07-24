@@ -27,7 +27,7 @@ class DailyNameGenerator
             puts o['OrderStatus']
             puts "#{start_time.hour}\n#{counter+=1}: #{o['BuyerName']} - #{o['ShippingAddress']['Phone']}" 
             order_details = client.list_order_items(o['AmazonOrderId']).xml["ListOrderItemsResponse"]["ListOrderItemsResult"]["OrderItems"]["OrderItem"]
-            # byebug\
+
             puts order_details["Title"].split(' - ').first
             first_name, last_name = o['BuyerName'].split(' ')
             p_title = order_details["Title"].split(' - ').first

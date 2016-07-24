@@ -33,6 +33,8 @@ gem 'rails_12factor'
 
 gem 'sidekiq'
 
+gem "paperclip", "~> 5.0.0"
+
 gem 'sinatra', :require => nil
 gem 'redis-rails', '~> 4.0.0'
 gem 'redis-namespace'
@@ -48,6 +50,10 @@ gem 'tzip'
 gem 'tzinfo'
 
 gem 'tzinfo-data'
+
+gem 'aws-sdk', '~> 2'
+
+gem 'ckeditor_rails'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
