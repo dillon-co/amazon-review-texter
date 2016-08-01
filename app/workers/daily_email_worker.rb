@@ -13,7 +13,7 @@ class DailyEmailCreator
     puts start_time.hour + 1
     counter = 0
     until start_time.hour.to_i == 2
-      # begin
+      begin
         end_time = start_time + 1.hour
         end_time
         client.list_orders({created_after: "#{start_time.iso8601}", created_before: "#{end_time.iso8601}"}).xml['ListOrdersResponse']['ListOrdersResult']['Orders']['Order'].each do |o| 
@@ -36,13 +36,13 @@ class DailyEmailCreator
               next
             end    
           else
-              next
-            end  
+            next
+          end  
         end  
         start_time = end_time  
-      # rescue => Excon::Error::ServiceUnavailable
-      #   puts e
-      #   next
+      rescue => Excon::Error::ServiceUnavailable
+        puts e
+        next
       end     
     end
   end       

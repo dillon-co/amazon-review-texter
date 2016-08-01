@@ -25,6 +25,8 @@ Rails.application.routes.draw do
 
   post 'customer_responses/:action', as: :customer_responses, controller: 'customer_responses'
   # The priority is based upon order of creation: first created -> highest priority.
+
+  
   #
   #
   #
