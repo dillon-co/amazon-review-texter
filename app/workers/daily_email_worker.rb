@@ -40,7 +40,7 @@ class DailyEmailCreator
           end  
         end  
         start_time = end_time  
-      rescue => Excon::Error::ServiceUnavailable
+      rescue => Excon::Errors::ServiceUnavailable
         puts e
         next
       end     
