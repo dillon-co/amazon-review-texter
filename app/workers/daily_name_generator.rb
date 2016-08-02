@@ -23,7 +23,7 @@ class DailyNameGenerator
                            "Central Time (US & Canada)" => 'https://pp17.perfectpitchtech.com/prospect-upload/29cb7d1a-4ab9-11e6-98d4-44a8422b4ea5/'}
        # byebug
         client.list_orders({created_after: "#{start_time.iso8601}", created_before: "#{end_time.iso8601}"}).xml['ListOrdersResponse']['ListOrdersResult']['Orders']['Order'].each do |o| 
-          sleep 0.01
+          sleep 0.1
           if o['OrderStatus'] != "Canceled" 
             puts o['OrderStatus']
             puts "#{start_time.hour}\n#{counter+=1}: #{o['BuyerName']} - #{o['ShippingAddress']['Phone']}" 

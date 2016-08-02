@@ -10,7 +10,7 @@
       <th>Product Bought</th>
       <th>Product ID</th>
     </tr>  
-    <% @clients.each do |client| %> 
+    <% @clients.reverse_each do |client| %> 
     <tr>
       <td><%= client.name %></td>
       <td><%= client.phone_number %></td>

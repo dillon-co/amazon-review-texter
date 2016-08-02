@@ -7,7 +7,7 @@
       <th>Message</th>
     </tr> 
 
-    <% @messages.each do |message| %> 
+    <% @messages.reverse_each do |message| %> 
       <tr>
          <td><%= message.user_name %></td>
          <td><%= message.user_number %></td>
