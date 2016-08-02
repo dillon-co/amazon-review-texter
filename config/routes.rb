@@ -17,6 +17,8 @@ Rails.application.routes.draw do
 
   get 'review_redirect/:id' => 'products#review_redirect', as: :review_redirect
 
+  get 'about' => 'products#about', as: :about
+
   root to: 'products#index'
 
 
@@ -26,7 +28,7 @@ Rails.application.routes.draw do
   post 'customer_responses/:action', as: :customer_responses, controller: 'customer_responses'
   # The priority is based upon order of creation: first created -> highest priority.
 
-  
+
   #
   #
   #

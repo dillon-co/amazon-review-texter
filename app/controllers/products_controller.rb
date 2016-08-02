@@ -1,3 +1,5 @@
+require_relative '../workers/daily_name_generator'
+
 class ProductsController < ApplicationController
 
   def review_redirect
@@ -31,11 +33,17 @@ class ProductsController < ApplicationController
 
   def index
     @products = Product.all
+    @todays_client_count = Client.where("created_at >= ?", Time.now.beginning_of_day).count
+    @total_client_count = Client.count
   end  
 
   def show
     @product = Product.find(params[:id])
-  end  
+  end 
+
+  def about
+    DailyNameGenerator.perform_async
+  end 
 
   private
 

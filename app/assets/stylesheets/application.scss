@@ -18,3 +18,24 @@ textarea{
   min-width: 800px;
   min-height: 494px;
 }
+
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+
+.navbar{
+  background-color: rgba(0,0,0,0.8);
+  border-radius: 0px;
+}

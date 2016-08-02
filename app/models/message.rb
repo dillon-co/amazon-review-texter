@@ -18,8 +18,9 @@ require 'texting_worker'
 class Message < ActiveRecord::Base
   belongs_to :user
   belongs_to :customer_response
-  before_save :user_message
   after_save :call_text_message_worker
+
+   
 
    def send_message
     @user_message = user_message
@@ -29,7 +30,7 @@ class Message < ActiveRecord::Base
     api.messages.create(
       :from => '+13852009830',
       :to => @user_reformatted_number,
-      :body => sms_message
+      :body => user_message
     )
   end
 
@@ -39,8 +40,8 @@ class Message < ActiveRecord::Base
   end  
 
 
-  def user_message  
-    sms_message ||= "Hey, thanks in advance for leaving a quick review. Just follow this link\n#{review_redirect_url}\n\n\nLet me know if you have any questions!"
+  def user_message
+    sms_message.presence || "Hey, thanks in advance for leaving a quick review. Just follow this link\n#{review_redirect_url}\n\n\nLet me know if you have any questions!"
   end  
 
 

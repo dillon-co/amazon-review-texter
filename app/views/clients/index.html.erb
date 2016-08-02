@@ -1,0 +1,22 @@
+<div class="container">
+  <h1>All data sent to call center (or attempted to send)</h1>
+
+  <h4><%= @clients.count %> sent so far </h4>
+  <h3><%= @todays_clients.count %> sent today</h3>
+  <table>
+    <tr>
+      <th>Name</th>
+      <th>Phone</th>
+      <th>Product Bought</th>
+      <th>Product ID</th>
+    </tr>  
+    <% @clients.each do |client| %> 
+    <tr>
+      <td><%= client.name %></td>
+      <td><%= client.phone_number %></td>
+      <td><%= client.product_name %></td>
+      <td><%= client.product_id %></td>
+    </tr>  
+    <% end %>
+  </table>  
+</div>

@@ -1,0 +1,18 @@
+<h1>Messages</h1>
+<div class="container">
+  <table>
+    <tr>
+      <th>Sent to</th>
+      <th>Phone Number</th>
+      <th>Message</th>
+    </tr> 
+
+    <% @messages.each do |message| %> 
+      <tr>
+         <td><%= message.user_name %></td>
+         <td><%= message.user_number %></td>
+         <td><%= message.user_message %></td>
+      </tr>  
+    <% end %>
+  </table>  
+</div>
