@@ -19,7 +19,7 @@ class Product < ActiveRecord::Base
 
   
   def updated_review_url
-    amazon_review_url || "https://www.amazon.com/review/create-review/ref=cm_cr_dp_wrt_summary?ie=UTF8&asin=#{amazon_id}#"  
+    amazon_review_url.presence || "https://www.amazon.com/review/create-review/ref=cm_cr_dp_wrt_summary?ie=UTF8&asin=#{amazon_id}#"  
   end  
 
 end
