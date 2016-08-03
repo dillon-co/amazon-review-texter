@@ -5,7 +5,7 @@ class ProductsController < ApplicationController
   def review_redirect
     p = Product.find(params[:id])
     p.update(review_count: p.review_count+1)
-    redirect_to p.amazon_review_url
+    redirect_to p.updated_review_url
   end
 
   def new

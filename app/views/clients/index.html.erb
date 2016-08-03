@@ -5,6 +5,7 @@
   <h3><%= @todays_clients.count %> sent today</h3>
   <table>
     <tr>
+      <th>Time Sent</th>
       <th>Name</th>
       <th>Phone</th>
       <th>Product Bought</th>
@@ -12,6 +13,7 @@
     </tr>  
     <% @clients.reverse_each do |client| %> 
     <tr>
+      <td><%= clients.created_at %></td>
       <td><%= client.name %></td>
       <td><%= client.phone_number %></td>
       <td><%= client.product_name %></td>

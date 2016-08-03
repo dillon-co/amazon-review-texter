@@ -15,11 +15,11 @@ class Product < ActiveRecord::Base
   belongs_to :users
   has_one :client_email
 
-  before_save :update_review_url
+
 
   
-  def update_review_url
-    amazon_review_url ||= "https://www.amazon.com/review/create-review/ref=cm_cr_dp_wrt_summary?ie=UTF8&asin=#{amazon_id}#"  
+  def updated_review_url
+    amazon_review_url || "https://www.amazon.com/review/create-review/ref=cm_cr_dp_wrt_summary?ie=UTF8&asin=#{amazon_id}#"  
   end  
 
 end
