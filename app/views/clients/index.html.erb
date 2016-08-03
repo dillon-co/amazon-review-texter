@@ -13,7 +13,7 @@
     </tr>  
     <% @clients.reverse_each do |client| %> 
     <tr>
-      <td><%= client.created_at.to_date %></td>
+      <td><%= client.created_at.strftime("%A, %d %b %Y %l:%M %p") %></td>
       <td><%= client.name %></td>
       <td><%= client.phone_number %></td>
       <td><%= client.product_name %></td>

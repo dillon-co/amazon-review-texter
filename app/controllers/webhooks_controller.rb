@@ -4,7 +4,7 @@ class WebhooksController < ApplicationController
     @webhooks = Webhook.all
   end  
 
-
+product_id
   def call_center_response
     first_name, phone_number, product_id, product_name = params[:first_name], params[:phone_number].to_s, params[:product_id], params[:product_name]
     user = User.find_or_create_by(name: first_name, phone_number: phone_number)
