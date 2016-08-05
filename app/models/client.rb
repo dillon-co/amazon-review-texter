@@ -8,6 +8,8 @@
 #  phone_number :string
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
+#  product_name :string
+#  product_id   :string
 #
 
 class Client < ActiveRecord::Base
