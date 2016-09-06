@@ -13,7 +13,7 @@ class DailyNameGenerator
     start_time = 2.weeks.ago.beginning_of_day
     puts start_time.hour + 1
     counter = 0
-    until start_time.hour.to_i == 2
+    until start_time.hour.to_i == 22
       begin
         end_time = start_time + 1.hour
         end_time
@@ -21,30 +21,38 @@ class DailyNameGenerator
                            "Mountain Time (US & Canada)" => 'https://pp17.perfectpitchtech.com/prospect-upload/2e46d24a-4ab9-11e6-ac7d-44a8422b4ea5/',
                            "Eastern Time (US & Canada)" => 'https://pp17.perfectpitchtech.com/prospect-upload/24c39dd4-4ab9-11e6-b20d-44a8422b4ea5/',
                            "Central Time (US & Canada)" => 'https://pp17.perfectpitchtech.com/prospect-upload/29cb7d1a-4ab9-11e6-98d4-44a8422b4ea5/'}
-       # byebug
+
         client.list_orders({created_after: "#{start_time.iso8601}", created_before: "#{end_time.iso8601}"}).xml['ListOrdersResponse']['ListOrdersResult']['Orders']['Order'].each do |o| 
           sleep 1
           if o['OrderStatus'] != "Canceled" 
+            
             puts o['OrderStatus']
-            puts "#{start_time.hour}\n#{counter+=1}: #{o['BuyerName']} - #{o['ShippingAddress']['Phone']}" 
+            puts "#{start_time.hour}\n#{counter+=1}: #{o['BuyerName']} - #{o['ShippingAddress']['Phone']}"  
             order_details = client.list_order_items(o['AmazonOrderId']).xml["ListOrderItemsResponse"]["ListOrderItemsResult"]["OrderItems"]["OrderItem"]
-
-            puts order_details["Title"].split(' - ').first
             first_name, last_name = o['BuyerName'].split(' ')
-            p_title = order_details["Title"].split(' - ').first
+            
+            if order_details.class == Hash
+              puts order_details["Title"].split(' - ').first
+              p_title, order_asin = order_details["Title"].split(' - ').first, order_details['ASIN']
+              Client.find_or_create_by(name: "#{first_name} #{last_name}", phone_number: o['ShippingAddress']['Phone'], product_name: p_title, product_id: order_asin)
+            else  
+              puts order_details.first["Title"].split(' - ').first
+              p_title, order_asin = order_details.first["Title"].split(' - ').first, order_details.first['ASIN']
+              Client.find_or_create_by(name: "#{first_name} #{last_name}", phone_number: o['ShippingAddress']['Phone'], product_name: p_title, product_id: order_asin)  
+            end  
+            
             puts "\n\n#{'='*20}\n\n#{first_name} => #{p_title}\n\n\n\n"
-            Client.find_or_create_by(name: "#{first_name} #{last_name}", phone_number: o['ShippingAddress']['Phone'], product_name: p_title, product_id: order_details['ASIN'])
             zip = o['ShippingAddress']['PostalCode'].split('-').first
-            # byebug
+          
             post_url = time_zone_urls[time_zone(zip)]
-              response = Unirest.post post_url, 
+            response = Unirest.post post_url, 
                                       headers:{ "Accept" => "application/json" }, 
                                       parameters:{ first_name:    first_name,
                                                    last_name:     last_name, 
                                                    primary_phone: o['ShippingAddress']['Phone'], 
                                                    zip_code:      zip,   
                                                    product_title: p_title, 
-                                                   product_id:    order_details['ASIN'] }
+                                                   product_id:    order_asin }
           
             puts response.code
           else
@@ -54,6 +62,7 @@ class DailyNameGenerator
         start_time = end_time
       rescue => e
         puts e
+        sleep 180
         next
       end  
     end
