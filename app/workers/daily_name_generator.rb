@@ -49,7 +49,9 @@ class DailyNameGenerator
         start_time = end_time
       rescue => e
         puts e
-        sleep 180
+        if e.split(' ').include('503')
+          sleep 180
+        end  
         next
       end  
     end
