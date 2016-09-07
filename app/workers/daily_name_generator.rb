@@ -33,7 +33,7 @@ class DailyNameGenerator
 
               puts "#{start_time.hour}\n#{counter+=1}: #{o['BuyerName']} - #{o['ShippingAddress']['Phone']}"  
               order_details = client.list_order_items(o['AmazonOrderId']).xml["ListOrderItemsResponse"]["ListOrderItemsResult"]["OrderItems"]["OrderItem"]
-              if o["BuyerName"].split(' ').count > 1 ? first_name, last_name = o['BuyerName'].split(' ') : first_name, last_name = "#{o["BuyerName"]} none".split(' ')
+              o["BuyerName"].split(' ').count > 1 ? first_name, last_name = o['BuyerName'].split(' ') : first_name, last_name = "#{o["BuyerName"]} none".split(' ')
               zip = o['ShippingAddress']['PostalCode'].split('-').first
               
               if order_details.class == Hash
