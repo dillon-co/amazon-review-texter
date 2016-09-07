@@ -14,13 +14,14 @@ class DailyNameGenerator
     puts start_time.hour + 1
     counter = 0
     until start_time.hour.to_i == 22
-      begin
+      # begin
         end_time = start_time + 1.hour
         end_time
       
-
+        puts client.list_orders({created_after: "#{start_time.iso8601}", created_before: "#{end_time.iso8601}"}).xml
         client.list_orders({created_after: "#{start_time.iso8601}", created_before: "#{end_time.iso8601}"}).xml['ListOrdersResponse']['ListOrdersResult']['Orders']['Order'].each do |o| 
           sleep 1
+          puts o
           if o.class == Hash
             o = o
           else
@@ -32,7 +33,7 @@ class DailyNameGenerator
 
               puts "#{start_time.hour}\n#{counter+=1}: #{o['BuyerName']} - #{o['ShippingAddress']['Phone']}"  
               order_details = client.list_order_items(o['AmazonOrderId']).xml["ListOrderItemsResponse"]["ListOrderItemsResult"]["OrderItems"]["OrderItem"]
-              first_name, last_name = o['BuyerName'].split(' ')
+              if o["BuyerName"].split(' ').count > 1 ? first_name, last_name = o['BuyerName'].split(' ') : first_name, last_name = "#{o["BuyerName"]} none".split(' ')
               zip = o['ShippingAddress']['PostalCode'].split('-').first
               
               if order_details.class == Hash
@@ -54,13 +55,13 @@ class DailyNameGenerator
                 
         end  
         start_time = end_time
-      rescue => e
-        puts e
-        # if e.class == "Expected(200) <=> Actual(503 Service Unavailable)"
-          sleep 5.minutes
-        # end  
-        next
-      end  
+      # rescue => e
+      #   puts e
+      #   # if e.class == "Expected(200) <=> Actual(503 Service Unavailable)"
+      #     sleep 5.minutes
+      #   # end  
+      #   next
+      # end  
     end
   end 
 
