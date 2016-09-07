@@ -2,14 +2,16 @@
 #
 # Table name: clients
 #
-#  id           :integer          not null, primary key
-#  name         :string
-#  email        :string
-#  phone_number :string
-#  created_at   :datetime         not null
-#  updated_at   :datetime         not null
-#  product_name :string
-#  product_id   :string
+#  id            :integer          not null, primary key
+#  name          :string
+#  email         :string
+#  phone_number  :string
+#  created_at    :datetime         not null
+#  updated_at    :datetime         not null
+#  product_name  :string
+#  product_id    :string
+#  primary_phone :string
+#  zip_code      :string
 #
 
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
