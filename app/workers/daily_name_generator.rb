@@ -50,7 +50,7 @@ class DailyNameGenerator
       rescue => e
         puts e
         if e.split(' ').include('503')
-          sleep 180
+          sleep 3.minutes
         end  
         next
       end  
