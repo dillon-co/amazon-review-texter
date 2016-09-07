@@ -21,30 +21,37 @@ class DailyNameGenerator
 
         client.list_orders({created_after: "#{start_time.iso8601}", created_before: "#{end_time.iso8601}"}).xml['ListOrdersResponse']['ListOrdersResult']['Orders']['Order'].each do |o| 
           sleep 1
-          if o['OrderStatus'] != "Canceled" 
-            
-            puts o['OrderStatus']
-            puts "#{start_time.hour}\n#{counter+=1}: #{o['BuyerName']} - #{o['ShippingAddress']['Phone']}"  
-            order_details = client.list_order_items(o['AmazonOrderId']).xml["ListOrderItemsResponse"]["ListOrderItemsResult"]["OrderItems"]["OrderItem"]
-            first_name, last_name = o['BuyerName'].split(' ')
-            zip = o['ShippingAddress']['PostalCode'].split('-').first
-            
-            if order_details.class == Hash
-              puts order_details["Title"].split(' - ').first
-              p_title, order_asin = order_details["Title"].split(' - ').first, order_details['ASIN']
-              Client.find_or_create_by(name: "#{first_name} #{last_name}", phone_number: o['ShippingAddress']['Phone'], product_name: p_title, product_id: order_asin, zip_code: zip)
-            else  
-              puts order_details.first["Title"].split(' - ').first
-              p_title, order_asin = order_details.first["Title"].split(' - ').first, order_details.first['ASIN']
-              Client.find_or_create_by(name: "#{first_name} #{last_name}", phone_number: o['ShippingAddress']['Phone'], product_name: p_title, product_id: order_asin, zip_code: zip)  
-            end  
-            
-            puts "\n\n#{'='*20}\n\n#{first_name} => #{p_title}\n\n\n\n"
-          
-            
+          if o.class = Hash
+            o = o
           else
-            next
+            o = o.first
           end  
+            if o['OrderStatus'] != "Canceled" 
+              
+              puts o['OrderStatus']
+
+              puts "#{start_time.hour}\n#{counter+=1}: #{o['BuyerName']} - #{o['ShippingAddress']['Phone']}"  
+              order_details = client.list_order_items(o['AmazonOrderId']).xml["ListOrderItemsResponse"]["ListOrderItemsResult"]["OrderItems"]["OrderItem"]
+              first_name, last_name = o['BuyerName'].split(' ')
+              zip = o['ShippingAddress']['PostalCode'].split('-').first
+              
+              if order_details.class == Hash
+                puts order_details["Title"].split(' - ').first
+                p_title, order_asin = order_details["Title"].split(' - ').first, order_details['ASIN']
+                Client.find_or_create_by(name: "#{first_name} #{last_name}", phone_number: o['ShippingAddress']['Phone'], product_name: p_title, product_id: order_asin, zip_code: zip)
+              else  
+                puts order_details.first["Title"].split(' - ').first
+                p_title, order_asin = order_details.first["Title"].split(' - ').first, order_details.first['ASIN']
+                Client.find_or_create_by(name: "#{first_name} #{last_name}", phone_number: o['ShippingAddress']['Phone'], product_name: p_title, product_id: order_asin, zip_code: zip)  
+              end  
+              
+              puts "\n\n#{'='*20}\n\n#{first_name} => #{p_title}\n\n\n\n"
+            
+              
+            else
+              next
+            end
+                
         end  
         start_time = end_time
       rescue => e
