@@ -49,9 +49,9 @@ class DailyNameGenerator
         start_time = end_time
       rescue => e
         puts e
-        if e == "Expected(200) <=> Actual(503 Service Unavailable)"
+        # if e.class == "Expected(200) <=> Actual(503 Service Unavailable)"
           sleep 3.minutes
-        end  
+        # end  
         next
       end  
     end
