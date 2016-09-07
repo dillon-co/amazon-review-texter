@@ -14,7 +14,7 @@ class DailyNameGenerator
     puts start_time.hour + 1
     counter = 0
     until start_time.hour.to_i == 22
-      # begin
+      begin
         end_time = start_time + 1.hour
         end_time
       
