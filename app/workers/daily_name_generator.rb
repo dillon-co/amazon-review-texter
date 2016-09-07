@@ -49,7 +49,7 @@ class DailyNameGenerator
         start_time = end_time
       rescue => e
         puts e
-        if e.split(' ').include('503')
+        if e == Excon::Error::ServiceUnavailable
           sleep 3.minutes
         end  
         next
