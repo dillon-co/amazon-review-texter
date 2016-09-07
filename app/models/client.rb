@@ -25,7 +25,7 @@ class Client < ActiveRecord::Base
                 headers:{ "Accept" => "application/json" }, 
                 parameters:{ first_name:    first_name,
                              last_name:     last_name, 
-                             primary_phone: primary_phone, 
+                             primary_phone: phone_number, 
                              zip_code:      zip_code,   
                              product_title: product_name, 
                              product_id:    product_id }
