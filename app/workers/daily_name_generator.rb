@@ -32,11 +32,11 @@ class DailyNameGenerator
             if order_details.class == Hash
               puts order_details["Title"].split(' - ').first
               p_title, order_asin = order_details["Title"].split(' - ').first, order_details['ASIN']
-              Client.find_or_create_by(name: "#{first_name} #{last_name}", phone_number: o['ShippingAddress']['Phone'], product_name: p_title, product_id: order_asin, primary_phone: o['ShippingAddress']['Phone'], zip_code: zip)
+              Client.find_or_create_by(name: "#{first_name} #{last_name}", phone_number: o['ShippingAddress']['Phone'], product_name: p_title, product_id: order_asin, zip_code: zip)
             else  
               puts order_details.first["Title"].split(' - ').first
               p_title, order_asin = order_details.first["Title"].split(' - ').first, order_details.first['ASIN']
-              Client.find_or_create_by(name: "#{first_name} #{last_name}", phone_number: o['ShippingAddress']['Phone'], product_name: p_title, product_id: order_asin, primary_phone: o['ShippingAddress']['Phone'], zip_code: zip)  
+              Client.find_or_create_by(name: "#{first_name} #{last_name}", phone_number: o['ShippingAddress']['Phone'], product_name: p_title, product_id: order_asin, zip_code: zip)  
             end  
             
             puts "\n\n#{'='*20}\n\n#{first_name} => #{p_title}\n\n\n\n"
