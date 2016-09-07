@@ -21,7 +21,7 @@ class DailyNameGenerator
 
         client.list_orders({created_after: "#{start_time.iso8601}", created_before: "#{end_time.iso8601}"}).xml['ListOrdersResponse']['ListOrdersResult']['Orders']['Order'].each do |o| 
           sleep 1
-          if o.class = Hash
+          if o.class == Hash
             o = o
           else
             o = o.first
